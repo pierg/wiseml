@@ -52,7 +52,7 @@ class RandomEnv(ExMiniGridEnv):
             grid_size=size,
             max_steps=4*size*size,
             # Set this to True for maximum speed
-            see_through_walls= not {3}
+            see_through_walls = not {3}
         )
         
     def getRooms(self):
@@ -179,12 +179,38 @@ class RandomEnv(ExMiniGridEnv):
         # Set the random seed to the random token, so we can reproduce the environment
         random.seed("{4}")
         
-        #Place lightswitch
+        #The number of elements that need to be reachable in the room (Door, Goal, LightSwitch)
+        n_elements = 2
+           
+        
         width_pos = random.randint(2,{0}-5) # x position of the light switch (2 tiles space for each room)
         height_pos = random.randint(2,{0}-2) # y position of light switch (needs space for the wall and door)
         xdoor = width_pos + 1 # x position of the door 
         ydoor = height_pos -1 # y position of the door
-        switchRoom = LightSwitch()
+        
+        
+        #Add the room
+        self.roomList = []
+        self.roomList.append(Room(0,(width_pos + 2, height),(0, 0),True))
+        self.roomList.append(Room(1,(width - width_pos - 2, height),(width_pos + 2, 0), not {3}))
+        self.roomList[1].setEntryDoor((xdoor,ydoor))
+        self.roomList[0].setExitDoor((xdoor,ydoor))     
+        
+        if {3}:        
+            #Place lightswitch
+            switchRoom = LightSwitch()
+            
+            switchRoom.affectRoom(self.roomList[1])
+            switchRoom.setSwitchPos((width_pos,height_pos))
+            switchRoom.cur_pos = (width_pos, height_pos)
+            
+            self.grid.set(width_pos, height_pos, switchRoom)
+            self.switchPosition = []
+            self.switchPosition.append((width_pos, height_pos))
+            
+            tab = self.saveElements(self.roomList[1])
+            switchRoom.elements_in_room(tab)
+            n_elements+=1
         
         # Place the agent
         self.start_dir = random.randint(0,3)
@@ -207,36 +233,15 @@ class RandomEnv(ExMiniGridEnv):
         self.grid.vert_wall(xdoor, 1, height-2)
         
         
-        #The number of elements that need to be reachable in the room (Door, Goal, LightSwitch)
-        n_elements = 3
-        
         if {8}:        
             self.grid.set(xdoor, ydoor , LockedDoor('yellow'))
             (x_key, y_key) = self._valid_free_position(x_agent, y_agent, xdoor, self.grid.height - 1)
             self.grid.set(x_key, y_key, Key())
             n_elements += 1
         else:
-            self.grid.set(xdoor, ydoor ,Door('yellow'))
+            self.grid.set(xdoor, ydoor ,Door('yellow')) 
         
-        
-        #Add the room
-        self.roomList = []
-        self.roomList.append(Room(0,(width_pos + 2, height),(0, 0),True))
-        self.roomList.append(Room(1,(width - width_pos - 2, height),(width_pos + 2, 0),False))
-        self.roomList[1].setEntryDoor((xdoor,ydoor))
-        self.roomList[0].setExitDoor((xdoor,ydoor))        
-        
-        
-        #Place the lightswitch
-        switchRoom.affectRoom(self.roomList[1])
-        switchRoom.setSwitchPos((width_pos,height_pos))
-        switchRoom.cur_pos = (width_pos, height_pos)
-        
-        self.grid.set(width_pos, height_pos, switchRoom)
-        self.switchPosition = []
-        self.switchPosition.append((width_pos, height_pos))
-        
-        
+
         n_water = {1}
         n_dirt = {7}
         n_boxes = {9}
@@ -261,10 +266,7 @@ class RandomEnv(ExMiniGridEnv):
             boxes = self._place_randomly(x_agent,y_agent,n_boxes,Box,'red')
             (elements, dirt_count, boxes_count) = self._reachable_elements(x_agent,y_agent)
             stop += 1
-        
-        tab = self.saveElements(self.roomList[1])
-        switchRoom.elements_in_room(tab)
-        switchRoom.elements_in_room(tab)
+
         
         self.mission = ""
 
