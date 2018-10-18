@@ -97,9 +97,9 @@ def main():
                 print("unknown key %s, going forward" % keyName)
                 return
             elif keyName == 'ALT':
-                action = env.actions.pickup
+                action = env.env.actions.pickup
             elif keyName == 'RETURN':
-                action = env.actions.drop
+                action = env.env.actions.drop
             elif keyName == 'CTRL':
                 action = env.env.actions.forward
                 print("unknown key %s, going forward" % keyName)
