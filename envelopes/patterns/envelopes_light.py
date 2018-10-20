@@ -44,6 +44,8 @@ class SafetyEnvelope(gym.core.Wrapper):
         if self.config.debug_mode: print("proposed_action = " + self.env.action_to_string(proposed_action))
         self.perception.update(self.env.gen_obs_decoded())
 
+        self.env.render('human')
+
         # Rendering
         if self.config.a2c.num_processes == 1 and self.config.rendering:
             self.env.render('human')

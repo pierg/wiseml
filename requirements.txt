@@ -3,3 +3,5 @@ gym
 PyQt5
 transitions
 tensorflow
+cloudpickle
+mpi4py
