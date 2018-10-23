@@ -5,3 +5,5 @@ transitions
 tensorflow
 cloudpickle
 mpi4py
+matplotlib
+pandas
