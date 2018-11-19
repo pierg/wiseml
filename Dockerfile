@@ -11,6 +11,7 @@ RUN \
     mkdir $CODE_DIR && \
     cd $CODE_DIR && \
     git clone https://github.com/pierg/wiseml.git && \
+    git clone https://github.com/pierg/baselines.git && \
     cd wiseml && \
     pip install -r requirements.txt && \
     pip install --upgrade pip && \
@@ -36,6 +37,7 @@ RUN \
     pip install gym[atari,classic_control]>=0.10.9
 
 ENV PATH=$VENV/bin:$PATH
+ENV PYTHONPATH $PYTHONPATH:$CODE_DIR/baselines
 
 WORKDIR $HOME/wiseml
 

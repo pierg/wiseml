@@ -33,9 +33,3 @@ from gym_minigrid.envs.li_grid6 import *
 from gym_minigrid.envs.lighttest import *
 
 from gym_minigrid.envs.dirtwatlight import *
-
-from gym_minigrid.envs.randoms.randomenv6748 import *
-from gym_minigrid.envs.randoms.randomenv8105 import *
-from gym_minigrid.envs.randoms.randomenv4131 import *
-from gym_minigrid.envs.randoms.randomenv5966 import *
-from gym_minigrid.envs.randoms.randomenv8200 import *
