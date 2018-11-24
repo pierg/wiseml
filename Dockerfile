@@ -1,8 +1,14 @@
 FROM ubuntu:16.04
 
-RUN apt-get -y update && apt-get -y install git wget python-dev python3-dev libopenmpi-dev python-pip zlib1g-dev cmake libglib2.0-0 libsm6 libxext6 libfontconfig1 libxrender1 git
+RUN apt-get -y update && apt-get -y install git wget python-dev python3-dev libopenmpi-dev zlib1g-dev cmake libglib2.0-0 libsm6 libxext6 libfontconfig1 libxrender1 git
 ENV CODE_DIR /root/code
 ENV VENV /root/venv
+
+
+RUN apt-get remove python-pip python3-pip
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN python get-pip.py
+RUN python3 get-pip.py
 
 RUN \
     pip install virtualenv && \
