@@ -52,7 +52,6 @@ RUN \
     pip install virtualenv && \
     virtualenv $VENV --python=python3 && \
     . $VENV/bin/activate && \
-    pip install -r requirements.txt && \
     pip install --upgrade pip && \
     pip install codacy-coverage && \
     pip install scipy && \
@@ -73,7 +72,8 @@ RUN \
     pip install matplotlib && \
     pip install seaborn && \
     pip install glob2 && \
-    pip install gym[atari,classic_control]>=0.10.9
+    pip install gym[atari,classic_control]>=0.10.9 && \
+    pip install -r requirements.txt
 
 ENV PATH=$VENV/bin:$PATH
 ENV PYTHONPATH $PYTHONPATH:$CODE_DIR/baselines
