@@ -41,5 +41,5 @@ ENV PYTHONPATH $PYTHONPATH:$CODE_DIR/baselines
 
 WORKDIR $HOME/wiseml
 
-ENTRYPOINT ["./entrypoint.sh"]
-CMD [""]
+#ENTRYPOINT ["./entrypoint.sh"]
+#CMD [""]
