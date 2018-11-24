@@ -1,9 +1,19 @@
 FROM ubuntu:16.04
 
-RUN apt-get -y update && apt-get -y install git wget libopenmpi-dev zlib1g-dev cmake libglib2.0-0 libsm6 libxext6 libfontconfig1 libxrender1 git
+RUN apt-get -y update && apt-get -y install \
+    git \
+    wget \
+    libopenmpi-dev \
+    zlib1g-dev cmake \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libfontconfig1 \
+    libxrender1\
+    software-properties-common
+
 ENV CODE_DIR /root/code
 ENV VENV /root/venv
-
 
 # Install python
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
