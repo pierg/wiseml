@@ -1,24 +1,47 @@
 FROM ubuntu:16.04
 
-RUN apt-get -y update && apt-get -y install git wget python-dev python3-dev libopenmpi-dev zlib1g-dev cmake libglib2.0-0 libsm6 libxext6 libfontconfig1 libxrender1 git
+RUN apt-get -y update && apt-get -y install git wget libopenmpi-dev zlib1g-dev cmake libglib2.0-0 libsm6 libxext6 libfontconfig1 libxrender1 git
 ENV CODE_DIR /root/code
 ENV VENV /root/venv
 
 
-RUN apt-get remove python-pip python3-pip
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python get-pip.py
-RUN python3 get-pip.py
+# Install python
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    python-numpy \
+    python-dev
+
+# Installing python3.6
+RUN \
+    add-apt-repository ppa:jonathonf/python-3.6 && \
+    apt update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    python3.6 \
+    python3.6-dev \
+    python3.6-venv
+
+
+RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3
+
+# Installing pip and pip3
+RUN \
+    apt-get remove python-pip python3-pip && \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python get-pip.py && \
+    python3 get-pip.py && \
+    rm get-pip.py
+
+# Setting up the directories
+RUN \
+    mkdir $CODE_DIR && \
+    cd $CODE_DIR && \
+    git clone https://github.com/pierg/wiseml.git && \
+    git clone https://github.com/pierg/baselines.git && \
+    cd wiseml
+
 
 RUN \
     pip install virtualenv && \
     virtualenv $VENV --python=python3 && \
     . $VENV/bin/activate && \
-    mkdir $CODE_DIR && \
-    cd $CODE_DIR && \
-    git clone https://github.com/pierg/wiseml.git && \
-    git clone https://github.com/pierg/baselines.git && \
-    cd wiseml && \
     pip install -r requirements.txt && \
     pip install --upgrade pip && \
     pip install codacy-coverage && \
