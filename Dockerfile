@@ -42,16 +42,17 @@ RUN \
 # Setting up the directories
 RUN \
     mkdir $CODE_DIR && \
-    cd $CODE_DIR && \
+    WORKDIR $HOME && \
     git clone https://github.com/pierg/wiseml.git && \
     git clone https://github.com/pierg/baselines.git && \
     cd wiseml
 
-
 RUN \
     pip install virtualenv && \
     virtualenv $VENV --python=python3 && \
-    . $VENV/bin/activate && \
+    . $VENV/bin/activate
+
+RUN \
     pip install --upgrade pip && \
     pip install codacy-coverage && \
     pip install scipy && \
@@ -72,7 +73,9 @@ RUN \
     pip install matplotlib && \
     pip install seaborn && \
     pip install glob2 && \
-    pip install gym[atari,classic_control]>=0.10.9 && \
+    pip install gym[atari,classic_control]>=0.10.9
+
+RUN \
     pip install -r requirements.txt
 
 ENV PATH=$VENV/bin:$PATH
