@@ -38,14 +38,20 @@ RUN \
     python get-pip.py && \
     python3 get-pip.py && \
     rm get-pip.py
+#
+## Setting up the directories
+#RUN \
+#    mkdir $CODE_DIR && \
+#    WORKDIR $HOME && \
+#    git clone https://github.com/pierg/wiseml.git && \
+#    git clone https://github.com/pierg/baselines.git && \
+#    cd wiseml
 
-# Setting up the directories
-RUN \
-    mkdir $CODE_DIR && \
-    WORKDIR $HOME && \
-    git clone https://github.com/pierg/wiseml.git && \
-    git clone https://github.com/pierg/baselines.git && \
-    cd wiseml
+RUN mkdir $CODE_DIR
+RUN WORKDIR $HOME
+RUN git clone https://github.com/pierg/wiseml.git
+RUN git clone https://github.com/pierg/baselines.git
+RUN cd wiseml
 
 RUN \
     pip install virtualenv && \
