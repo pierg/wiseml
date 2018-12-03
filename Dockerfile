@@ -48,7 +48,7 @@ RUN \
 #    cd wiseml
 
 RUN mkdir $CODE_DIR
-WORKDIR $HOME
+WORKDIR $CODE_DIR
 RUN git clone https://github.com/pierg/wiseml.git
 RUN git clone https://github.com/pierg/baselines.git
 RUN cd wiseml
@@ -66,7 +66,7 @@ RUN \
     pip install joblib && \
     pip install zmq && \
     pip install dill && \
-    pip install progressbar2 && \
+    pip install progressbar2 &&pip \
     pip install mpi4py && \
     pip install cloudpickle && \
     pip install tensorflow==1.5.0 && \
