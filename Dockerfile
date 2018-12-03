@@ -48,7 +48,7 @@ RUN \
 #    cd wiseml
 
 RUN mkdir $CODE_DIR
-RUN WORKDIR $HOME
+WORKDIR $HOME
 RUN git clone https://github.com/pierg/wiseml.git
 RUN git clone https://github.com/pierg/baselines.git
 RUN cd wiseml
