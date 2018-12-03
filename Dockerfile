@@ -66,7 +66,7 @@ RUN \
     pip install joblib && \
     pip install zmq && \
     pip install dill && \
-    pip install progressbar2 &&pip \
+    pip install progressbar2 && \
     pip install mpi4py && \
     pip install cloudpickle && \
     pip install tensorflow==1.5.0 && \
