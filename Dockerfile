@@ -91,6 +91,7 @@ ENV PYTHONPATH $PYTHONPATH:$CODE_DIR/baselines
 WORKDIR $HOME/wiseml
 
 RUN pwd
+RUN ls
 
 RUN chmod +x ./entrypoint.sh
 
