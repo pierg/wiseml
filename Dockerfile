@@ -88,8 +88,6 @@ RUN \
 ENV PATH=$VENV/bin:$PATH
 ENV PYTHONPATH $PYTHONPATH:$CODE_DIR/baselines
 
-WORKDIR $CODE_DIR/wiseml
-
 RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
