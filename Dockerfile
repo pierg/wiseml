@@ -82,7 +82,8 @@ RUN \
     pip install gym[atari,classic_control]>=0.10.9
 
 RUN \
-    pip install -r requirements.txt
+    pip install PyQt5 && \
+    pip install transitions
 
 ENV PATH=$VENV/bin:$PATH
 ENV PYTHONPATH $PYTHONPATH:$CODE_DIR/baselines
