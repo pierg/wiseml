@@ -88,7 +88,5 @@ RUN \
 ENV PATH=$VENV/bin:$PATH
 ENV PYTHONPATH $PYTHONPATH:$CODE_DIR/baselines
 
-RUN chmod +x ./entrypoint.sh
-
 ENTRYPOINT ["./entrypoint.sh"]
 CMD [""]
