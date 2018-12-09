@@ -1,82 +1,40 @@
-FROM consol/ubuntu-xfce-vnc:1.1.0
+FROM ubuntu:18.04
 
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 USER=$USER HOME=$HOME
+# Install keyboard-configuration separately to avoid travis hanging waiting for keyboard selection
+RUN \
+    apt -y update && \
+    apt install -y keyboard-configuration && \
 
-RUN echo "The working directory is: $HOME"
-RUN echo "The user is: $USER"
-
-USER 0
-
-EXPOSE 5901
-EXPOSE 6901
-EXPOSE 8097
-
-RUN apt-get update && apt-get install -y \
-        sudo \
+    apt install -y \ 
+        python3-pip \
+        python3-dev \
+        python-pyglet \
+        python3-opengl \
+        python3-setuptools \
+        libjpeg-dev \
+        libboost-all-dev \
+        libsdl2-dev \
+        libosmesa6-dev \
+        patchelf \
+        ffmpeg \
+        xvfb \
+        wget \
         git \
-        && \
-    apt-get clean && \
+        unzip && \
+
+    apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 
-# install dependencies
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    build-essential \
-    apt-utils \
-    curl \
-    nano \
-    vim \
-    git \
-    zlib1g-dev \
-    cmake \
-    python-software-properties \
-    software-properties-common \
-    graphviz \
-    libgraphviz-dev \
-    graphviz-dev \
-    pkg-config \
-    ffmpeg \
-    zlib1g-dev cmake \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libfontconfig1 \
-    libxrender1
-
-
-# Install python
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python-numpy \
-    python-dev
-
-# Installing python3.6
-RUN add-apt-repository ppa:jonathonf/python-3.6
-RUN apt update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    python3.6 \
-    python3.6-dev \
-    python3.6-venv
-
-
-RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3
-
-# Installing pip and pip3
-RUN apt-get remove python-pip python3-pip
-RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python get-pip.py --trusted-host pypi.python.org
-RUN python3 get-pip.py --trusted-host pypi.python.org
-RUN rm get-pip.py
-
-
-RUN mkdir -p $HOME
-WORKDIR $HOME
+WORKDIR /home
 
 # Cloning the repositories
 RUN git clone https://github.com/pierg/wiseml.git
 RUN git clone https://github.com/pierg/baselines.git
-RUN cd wiseml
 
 
-RUN pip3 install --upgrade pip
+
+RUN python3 -m pip install --user --upgrade pip==9.0.3
 
 RUN \
     pip3 install codacy-coverage && \
@@ -100,14 +58,9 @@ RUN \
     pip3 install glob2 && \
     pip3 install gym[atari,classic_control]>=0.10.9
 
-RUN \
-    pip3 install PyQt5 && \
-    pip3 install transitions
+ENV PYTHONPATH $PYTHONPATH:/home/baselines
 
-
-ENV PYTHONPATH $PYTHONPATH:$HOME/baselines
-
-WORKDIR $HOME/wiseml
+WORKDIR /home/wiseml
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD [""]

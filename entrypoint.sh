@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 
 # Pull latest changes in the repositories
-echo "...updating repositories..."
+echo "...updating repository wiseml..."
 pwd
 git reset --hard HEAD
 git clean -f
 git pull
+
+echo "...updating repository wiseml..."
+cd ../baselines/
+pwd
+git reset --hard HEAD
+git clean -f
+git pull
+
+echo "...launching wiseml launch_script..."
+cd ../wiseml/
 pwd
 
 if [ $# -eq 0 ]
