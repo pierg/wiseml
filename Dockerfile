@@ -10,10 +10,13 @@ RUN apt-get -y update && apt-get -y install \
     libxext6 \
     libfontconfig1 \
     libxrender1\
-    software-properties-common
+    software-properties-common \
+    vim
 
 ENV CODE_DIR /root/code
 ENV VENV /root/venv
+
+
 
 # Install python
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -24,21 +27,23 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 RUN \
     add-apt-repository ppa:jonathonf/python-3.6 && \
     apt update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    build-essential \
     python3.6 \
     python3.6-dev \
+    python3-pip \
     python3.6-venv
 
 
 RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3
 
-# Installing pip and pip3
-RUN \
-    apt-get remove python-pip python3-pip && \
-    wget https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
-    python3 get-pip.py && \
-    rm get-pip.py
-#
+## Installing pip and pip3
+#RUN \
+#    apt-get remove python-pip python3-pip && \
+#    wget https://bootstrap.pypa.io/get-pip.py && \
+#    python get-pip.py && \
+#    python3 get-pip.py && \
+#    rm get-pip.py
+
 ## Setting up the directories
 RUN mkdir $CODE_DIR
 WORKDIR $CODE_DIR
