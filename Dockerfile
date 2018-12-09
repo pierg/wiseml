@@ -79,31 +79,30 @@ RUN cd wiseml
 RUN pip3 install --upgrade pip
 
 RUN \
-    pip install --upgrade pip && \
-    pip install codacy-coverage && \
-    pip install scipy && \
-    pip install tqdm && \
-    pip install joblib && \
-    pip install zmq && \
-    pip install dill && \
-    pip install progressbar2 && \
-    pip install mpi4py && \
-    pip install cloudpickle && \
-    pip install tensorflow==1.5.0 && \
-    pip install click && \
-    pip install opencv-python && \
-    pip install numpy && \
-    pip install pandas && \
-    pip install pytest==3.5.1 && \
-    pip install pytest-cov && \
-    pip install matplotlib && \
-    pip install seaborn && \
-    pip install glob2 && \
-    pip install gym[atari,classic_control]>=0.10.9
+    pip3 install codacy-coverage && \
+    pip3 install scipy && \
+    pip3 install tqdm && \
+    pip3 install joblib && \
+    pip3 install zmq && \
+    pip3 install dill && \
+    pip3 install progressbar2 && \
+    pip3 install mpi4py && \
+    pip3 install cloudpickle && \
+    pip3 install tensorflow==1.5.0 && \
+    pip3 install click && \
+    pip3 install opencv-python && \
+    pip3 install numpy && \
+    pip3 install pandas && \
+    pip3 install pytest==3.5.1 && \
+    pip3 install pytest-cov && \
+    pip3 install matplotlib && \
+    pip3 install seaborn && \
+    pip3 install glob2 && \
+    pip3 install gym[atari,classic_control]>=0.10.9
 
 RUN \
-    pip install PyQt5 && \
-    pip install transitions
+    pip3 install PyQt5 && \
+    pip3 install transitions
 
 
 ENV PYTHONPATH $PYTHONPATH:$HOME/baselines
