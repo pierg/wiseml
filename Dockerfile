@@ -62,8 +62,8 @@ RUN ln -s /usr/bin/python3.6 /usr/local/bin/python3
 # Installing pip and pip3
 RUN apt-get remove python-pip python3-pip
 RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python get-pip.py
-RUN python3 get-pip.py
+RUN python get-pip.py --trusted-host pypi.python.org
+RUN python3 get-pip.py --trusted-host pypi.python.org
 RUN rm get-pip.py
 
 
