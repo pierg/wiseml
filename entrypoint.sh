@@ -7,7 +7,7 @@ git reset --hard HEAD
 git clean -f
 git pull
 
-echo "...updating repository wiseml..."
+echo "...updating repository baselines..."
 cd ../baselines/
 pwd
 git reset --hard HEAD
