@@ -59,8 +59,7 @@ RUN \
     pip3 install glob2 && \
     pip3 install gym[atari,classic_control]>=0.10.9
 
-ENV PYTHONPATH $PYTHONPATH:/home/baselines
-ENV PYTHONPATH $PYTHONPATH:/home/gym-minigrid/gym_minigrid
+ENV PYTHONPATH "${PYTHONPATH}:/home/baselines:/home/gym-minigrid/:/home/gym-minigrid/gym_minigrid:/home/gym-minigrid/gym_minigrid/envs"
 
 WORKDIR /home/wiseml
 
