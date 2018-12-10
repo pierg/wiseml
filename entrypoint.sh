@@ -14,6 +14,13 @@ git reset --hard HEAD
 git clean -f
 git pull
 
+echo "...updating repository gym-minigrid..."
+cd ../gym-minigrid/
+pwd
+git reset --hard HEAD
+git clean -f
+git pull
+
 echo "...launching wiseml launch_script..."
 cd ../wiseml/
 pwd

@@ -31,6 +31,7 @@ WORKDIR /home
 # Cloning the repositories
 RUN git clone https://github.com/pierg/wiseml.git
 RUN git clone https://github.com/pierg/baselines.git
+RUN git clone https://github.com/pierg/gym-minigrid.git
 
 
 
@@ -59,6 +60,7 @@ RUN \
     pip3 install gym[atari,classic_control]>=0.10.9
 
 ENV PYTHONPATH $PYTHONPATH:/home/baselines
+ENV PYTHONPATH $PYTHONPATH:/home/gym-minigrid/gym_minigrid
 
 WORKDIR /home/wiseml
 
