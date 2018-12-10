@@ -7,7 +7,8 @@
     "debug_mode": false,
     "log_interval": 10,
     "algorithm": "a2c",
-    "max_num_frames": 8000000,
+    "n_cpu": 4,
+    "max_num_steps": 8000000,
     "agent_view_size": 7,
     "max_num_steps_episode": -1,
     "controllers": {
