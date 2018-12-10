@@ -29,7 +29,7 @@ RUN \
 WORKDIR /home
 
 # Cloning the repositories
-RUN git clone https://github.com/pierg/wiseml.git
+RUN git clone https://github.com/pierg/wiseml.git -b lecagy_gridworld --single-branch
 RUN git clone https://github.com/pierg/baselines.git
 
 
