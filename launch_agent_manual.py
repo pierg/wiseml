@@ -3,6 +3,8 @@
 from __future__ import division, print_function
 
 import sys
+import numpy
+import gym
 import time
 from optparse import OptionParser
 
@@ -165,9 +167,9 @@ def main():
     while True:
         env.render('human')
         time.sleep(0.01)
-        if observed and config.envelope_type == "mtsa":
-            env.step(-1)
-            observed = False
+        # if observed and config.envelope_type == "mtsa":
+        #     env.step(-1)
+        #     observed = False
         # If the window was closed
         if renderer.window == None:
             break

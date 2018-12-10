@@ -15,8 +15,8 @@ import os
 log_dir = "./log/"
 os.makedirs(log_dir, exist_ok=True)
 
-env = gym.make('MiniGrid-DirtWatLightExp-9x9-v0')
-env = SafetyEnvelope(env)
+env = gym.make('MiniGrid-LavaCrossingS9N1-v0')
+# env = SafetyEnvelope(env)
 env = Monitor(env, log_dir, allow_early_resets=True)
 env = DummyVecEnv([lambda: env])  # The algorithms require a vectorized environment to run
 

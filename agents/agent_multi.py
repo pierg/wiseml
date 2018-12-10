@@ -15,7 +15,7 @@ from agents.utils_functions import *
 log_dir = "./log/"
 os.makedirs(log_dir, exist_ok=True)
 
-env_id = "MiniGrid-DirtWatLightExp-9x9-v0"
+env_id = "MiniGrid-LavaCrossingS9N1-v0"
 n_timesteps = 250000
 
 # multiprocess environment
@@ -23,7 +23,7 @@ n_cpu = 4
 env = SubprocVecEnv([lambda: gym.make(env_id) for i in range(n_cpu)])
 
 model = PPO2(MlpLstmPolicy, env, verbose=1)
-model.learn(total_timesteps=250000)
+model.learn(total_timesteps=2500000)
 model.save("MiniGrid")
 
 del model # remove to demonstrate saving and loading
