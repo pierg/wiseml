@@ -40,54 +40,80 @@ class SafetyEnvelope(gym.core.Wrapper):
         self.goal_reward = self.config.rewards.standard.goal
         self.death_reward = self.config.rewards.standard.death
 
+
+    def which_action(self, action_planner):
+        if action_planner == "wait":
+            return self.env.actions.done
+        elif action_planner == "turn_right":
+            return self.env.actions.right
+        elif action_planner == "toggle":
+            return self.env.actions.toggle
+
     def step(self, proposed_action):
-        if self.config.debug_mode: print("proposed_action = " + self.env.action_to_string(proposed_action))
+
+        if self.config.debug_mode:
+            print("proposed_action = " + self.env.action_to_string(proposed_action))
+
+        # Updating the perceptions from raw observations
         self.perception.update(self.env.gen_obs_decoded())
 
-        self.env.render('human')
-
         # Rendering
-        if self.config.a2c.num_processes == 1 and self.config.rendering:
+        if self.config.rendering:
             self.env.render('human')
 
         n_violations = 0
         shaped_reward = 0
         safe_action = proposed_action
 
-        # Checking waterAbsence
-        if self.perception.is_condition_satisfied("stepping-on-water", proposed_action):
-            n_violations += 1
-            shaped_reward -= 0.1
-            safe_action = self.env.actions.done
+        if hasattr(self.config, 'monitors'):
+            if hasattr(self.config.monitors, 'patterns'):
+                for pattern in self.config.monitors.patterns:
+                    for rule in pattern:
+                        if rule.type == "absence":
+                            if self.perception.is_condition_satisfied(rule.conditions, proposed_action):
+                                if self.config.debug_mode:
+                                    print("violation detected: " + rule.name)
+                                n_violations += 1
+                                shaped_reward += rule.rewards.violated
+                                if rule.mode == "enforcing":
+                                    safe_action = self.which_action(rule.action_planner)
+                            else:
+                                shaped_reward += rule.rewards.respected
 
-        # Checking lightUniversally
-        if not self.perception.is_condition_satisfied("light-on-current-room"):
-            n_violations += 1
-            shaped_reward -= 0.1
-            safe_action = self.env.actions.done
+                        if rule.type == "universality":
+                            if not self.perception.is_condition_satisfied(rule.conditions, proposed_action):
+                                if self.config.debug_mode:
+                                    print("violation detected: " + rule.name)
+                                n_violations += 1
+                                shaped_reward += rule.rewards.violated
+                                if rule.mode == "enforcing":
+                                    safe_action = self.which_action(rule.action_planner)
+                            else:
+                                shaped_reward += rule.rewards.respected
 
-        # Checking lightPrecedence
-        if (self.perception.is_condition_satisfied("entering-a-room", proposed_action)
-                and not self.perception.is_condition_satisfied("light-switch-turned-on")):
-            n_violations += 1
-            shaped_reward -= 0.1
-            safe_action = self.env.actions.right
+                        if rule.type == "precedence":
+                            if (self.perception.is_condition_satisfied(rule.conditions.post, proposed_action)
+                                    and not self.perception.is_condition_satisfied(rule.conditions.pre)):
+                                if self.config.debug_mode:
+                                    print("violation detected: " + rule.name)
+                                n_violations += 1
+                                shaped_reward += rule.rewards.violated
+                                if rule.mode == "enforcing":
+                                    safe_action = self.which_action(rule.action_planner)
+                            else:
+                                shaped_reward += rule.rewards.respected
 
-        # Checking openDoorResponse
-        if (self.perception.is_condition_satisfied("door-closed-in-front")
-                and proposed_action != self.env.actions.toggle):
-            n_violations += 1
-            shaped_reward -= 0.1
-            safe_action = self.env.actions.toggle
-
-
-        # Checking switchOffResponse
-        if (self.perception.is_condition_satisfied("light-switch-in-front-off")
-                and proposed_action != self.env.actions.toggle):
-            n_violations += 1
-            shaped_reward -= 0.1
-            safe_action = self.env.actions.toggle
-
+                        if rule.type == "response":
+                            if (self.perception.is_condition_satisfied(rule.conditions.pre)
+                                    and not self.perception.is_condition_satisfied(rule.conditions.post, proposed_action)):
+                                if self.config.debug_mode:
+                                    print("violation detected: " + rule.name)
+                                n_violations += 1
+                                shaped_reward += rule.rewards.violated
+                                if rule.mode == "enforcing":
+                                    safe_action = self.which_action(rule.action_planner)
+                            else:
+                                shaped_reward += rule.rewards.respected
 
         # Send a suitable action to the environment
         obs, reward, done, info = self.env.step(safe_action)

@@ -11,7 +11,7 @@ from configurations import config_grabber as cg
 
 try:
     import gym_minigrid
-    from envelopes.patterns.envelopes_light import *
+    from envelopes.mtsa.envelopes import *
 except Exception as e:
     print(e)
     pass
@@ -165,6 +165,9 @@ def main():
     while True:
         env.render('human')
         time.sleep(0.01)
+        if observed and config.envelope_type == "mtsa":
+            env.step(-1)
+            observed = False
         # If the window was closed
         if renderer.window == None:
             break

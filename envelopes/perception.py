@@ -23,6 +23,41 @@ class Perception():
         front_index = grid.width*(grid.height-2) + int(math.floor(grid.width/2))
         return grid.grid[front_index]
 
+    def element_at_left(self):
+        grid = self.obs_grid
+        left_index = grid.width*(grid.height-1) + int(math.floor(grid.width/2) - 1)
+        return grid.grid[left_index]
+
+    def element_at_right(self):
+        grid = self.obs_grid
+        right_index = grid.width*(grid.height-1) + int(math.floor(grid.width/2) + 1)
+        return grid.grid[right_index]
+
+
+    def string_element_in_front(self):
+        grid = self.obs_grid
+        front_index = grid.width*(grid.height-2) + int(math.floor(grid.width/2))
+        if grid.grid[front_index] is not None:
+            return grid.grid[front_index].type
+        else:
+            return "none"
+
+    def string_element_at_left(self):
+        grid = self.obs_grid
+        left_index = grid.width*(grid.height-1) + int(math.floor(grid.width/2) - 1)
+        if grid.grid[left_index] is not None:
+            return grid.grid[left_index].type
+        else:
+            return "none"
+
+    def string_element_at_right(self):
+        grid = self.obs_grid
+        right_index = grid.width*(grid.height-1) + int(math.floor(grid.width/2) + 1)
+        if grid.grid[right_index] is not None:
+            return grid.grid[right_index].type
+        else:
+            return "none"
+
 
     def update(self, observations):
         self.obs_grid, extra_obs = observations
@@ -31,6 +66,8 @@ class Perception():
         self.current_room = extra_obs[2]
         self.current_room_light = extra_obs[3]
         self.next_room_light = extra_obs[4]
+        self.element_at_left()
+        self.element_at_right()
 
     def check_context(self, context):
         if context == "water-front":
