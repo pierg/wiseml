@@ -24,11 +24,13 @@ env = SubprocVecEnv([lambda: gym.make(env_id) for i in range(n_cpu)])
 
 model = PPO2(MlpLstmPolicy, env, verbose=1)
 model.learn(total_timesteps=2500000)
-model.save("MiniGrid")
+model.save("trained_models/MiniGrid")
 
 del model # remove to demonstrate saving and loading
 
-model = PPO2.load("MiniGrid")
+print("Trained Finished!")
+
+model = PPO2.load("trained_models/MiniGrid")
 
 # Enjoy trained agent
 obs = env.reset()
