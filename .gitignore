@@ -1,7 +1,8 @@
 .idea/*
 pytorch_a2c/trained_models/
 .DS_Store
-results/
+evaluation/tensorboard
+agents/trained_models
 
 *.pyc
 *__pycache__
