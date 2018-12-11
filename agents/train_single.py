@@ -2,9 +2,9 @@ import gym_minigrid
 import gym
 
 from envelopes.patterns.envelopes_light import *
-from stable_baselines.common.policies import MlpLstmPolicy
+from stable_baselines.common.policies import MlpPolicy
 from stable_baselines.common.vec_env import DummyVecEnv
-from stable_baselines.ppo2 import PPO2
+from stable_baselines import A2C
 from stable_baselines.bench import Monitor
 
 from stable_baselines.results_plotter import load_results, ts2xy
@@ -12,7 +12,7 @@ from stable_baselines.results_plotter import load_results, ts2xy
 import os
 
 # Create log dir
-log_dir = "./log/"
+log_dir = "./log_single/"
 os.makedirs(log_dir, exist_ok=True)
 
 env = gym.make('MiniGrid-LavaCrossingS9N1-v0')
@@ -50,7 +50,7 @@ def callback(_locals, _globals):
     return False
 
 
-model = PPO2(MlpLstmPolicy, env, verbose=1)
+model = A2C(MlpPolicy, env, verbose=1)
 model.learn(total_timesteps=10000, callback=callback)
 
 obs = env.reset()

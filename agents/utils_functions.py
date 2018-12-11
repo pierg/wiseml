@@ -105,7 +105,7 @@ def plot_results(log_folder, title='Learning Curve'):
     plt.show()
 
 
-def make_env(env_id, rank, seed=0):
+def make_env(env_id, rank, seed=0, log_dir=None):
     """
     Utility function for multiprocessed env.
 
@@ -118,6 +118,8 @@ def make_env(env_id, rank, seed=0):
     def _init():
         env = gym.make(env_id)
         env.seed(seed + rank)
+        if log_dir is not None:
+            env = Monitor(env, log_dir, allow_early_resets=True)
         return env
 
     set_global_seeds(seed)

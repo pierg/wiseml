@@ -5,25 +5,40 @@ import time
 from envelopes.patterns.envelopes_light import *
 from stable_baselines.bench import Monitor
 
+from configurations import config_grabber as cg
+
 from stable_baselines.common.policies import MlpPolicy, MlpLstmPolicy, MlpLnLstmPolicy
 from stable_baselines.common.vec_env import DummyVecEnv, SubprocVecEnv
 from stable_baselines import PPO2
 
 from agents.utils_functions import *
-from configurations import config_grabber as cg
 
 config = cg.Configuration.grab()
+
+
+
+# Create log dir
+log_dir = "./log_multi/"
+os.makedirs(log_dir, exist_ok=True)
+
 env_id = config.env_name
-n_timesteps = config.n_timesteps
+n_timesteps = config.max_num_steps
 
-args = get_args()
-
-n_cpu = 4
+# multiprocess environment
+n_cpu = config.n_cpu
 env = SubprocVecEnv([lambda: gym.make(env_id) for i in range(n_cpu)])
+# env = SubprocVecEnv([make_env(env_id, i, 0, log_dir) for i in range(n_cpu)])
 
-model_id = "PPO2_" + env_id + "_" + n_timesteps + "ts"
-model = PPO2.load("./trained_models/" + model_id)
-print("Model Loaded!")
+
+model = PPO2(MlpLstmPolicy, env, verbose=1, tensorboard_log="./tensorboard/")
+model.learn(total_timesteps=10000000000, callback=callback)
+model.save("trained_models/MiniGrid")
+
+del model # remove to demonstrate saving and loading
+
+print("Trained Finished!")
+
+model = PPO2.load("trained_models/MiniGrid")
 
 # Enjoy trained agent
 obs = env.reset()
