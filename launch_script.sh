@@ -44,6 +44,9 @@ if $start_training ; then
         fi
         cd ..
 
+        echo "...launching tensorboard..."
+        tensorboard --logdir=evaluation/tensorboard &
+
         echo "...setting up python environment..."
         PYTHONPATH=../gym-minigrid/:../gym-minigrid/gym_minigrid/:../baselines/:./configurations:./:$PYTHONPATH
         export PYTHONPATH
