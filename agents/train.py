@@ -16,11 +16,13 @@ from agents.utils_functions import *
 config = cg.Configuration.grab()
 args = ag.get_args()
 
-if args.timesteps != -1:
+if args.n_timesteps != -1:
     cg.Configuration.set("n_timesteps", args.n_timesteps)
 
 if args.env_name:
     cg.Configuration.set("env_name", args.env_name)
+
+verbose = args.verbose * 1
 
 env_id = config.env_name
 n_timesteps = config.n_timesteps
@@ -28,9 +30,9 @@ n_timesteps = config.n_timesteps
 n_cpu = 4
 env = SubprocVecEnv([lambda: gym.make(env_id) for i in range(n_cpu)])
 
-model = PPO2(MlpLstmPolicy, env, verbose=1, tensorboard_log="../evaluation/tensorboard/")
+model = PPO2(MlpLstmPolicy, env, verbose=verbose, tensorboard_log="../evaluation/tensorboard/")
 model.learn(total_timesteps=n_timesteps)
-model_id = "PPO2_" + env_id + "_" + n_timesteps + "ts"
+model_id = "PPO2_" + env_id + "_" + str(n_timesteps) + "ts"
 model.save("./trained_models/" + model_id)
 
 del model
