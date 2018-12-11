@@ -31,6 +31,7 @@ n_cpu = 4
 env = SubprocVecEnv([lambda: gym.make(env_id) for i in range(n_cpu)])
 
 model = PPO2(MlpLstmPolicy, env, verbose=verbose, tensorboard_log="../evaluation/tensorboard/")
+print("...starting the training for " + str(n_timesteps) + "...")
 model.learn(total_timesteps=n_timesteps)
 model_id = "PPO2_" + env_id + "_" + str(n_timesteps) + "ts"
 model.save("./trained_models/" + model_id)
