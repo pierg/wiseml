@@ -13,7 +13,6 @@ from stable_baselines import PPO2
 
 from agents.utils_functions import *
 
-config = cg.Configuration.grab()
 args = ag.get_args()
 
 if args.n_timesteps != -1:
@@ -24,6 +23,8 @@ if args.env_name:
     cg.Configuration.set("env_name", args.env_name)
 
 verbose = args.verbose * 1
+
+config = cg.Configuration.grab()
 
 env_id = config.env_name
 n_timesteps = config.n_timesteps
