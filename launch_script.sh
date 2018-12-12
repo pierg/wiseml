@@ -6,7 +6,7 @@ configuration_file="main.json"
 
 n_timesteps=-1
 start_training=false
-$start_tensorboard=false
+start_tensorboard=false
 verbose=false
 
 while getopts c:s:vtb opt; do
