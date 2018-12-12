@@ -59,10 +59,11 @@ if $start_training ; then
         export PYTHONPATH
 
         echo "...launching the training..."
+        cd agents
         if $verbose ; then
-            python3 agents/train.py --n_timesteps=$n_timesteps --verbose
+            python3 train.py --n_timesteps=$n_timesteps --verbose
         else
-            python3 agents/train.py --n_timesteps=$n_timesteps
+            python3 train.py --n_timesteps=$n_timesteps
         fi
 else
         echo "...accessing the container without launching anything..."
