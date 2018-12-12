@@ -16,7 +16,6 @@ config = cg.Configuration.grab()
 env_id = config.env_name
 n_timesteps = config.n_timesteps
 
-args = get_args()
 
 n_cpu = 4
 env = SubprocVecEnv([lambda: gym.make(env_id) for i in range(n_cpu)])

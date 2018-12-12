@@ -8,7 +8,7 @@ n_timesteps=-1
 start_training=false
 verbose=false
 
-while getopts c:s:vt opt; do
+while getopts c:s:vtb opt; do
     case ${opt} in
         c)
             configuration_file=${OPTARG}
@@ -24,6 +24,10 @@ while getopts c:s:vt opt; do
             ;;
         t)
             start_training=true
+            ;;
+        b)
+            echo "...launching tensorboard..."
+            tensorboard --logdir=evaluation/tensorboard &
             ;;
     esac
 done
