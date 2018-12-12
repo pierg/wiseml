@@ -6,6 +6,7 @@ configuration_file="main.json"
 
 n_timesteps=-1
 start_training=false
+$start_tensorboard=false
 verbose=false
 
 while getopts c:s:vtb opt; do
@@ -26,11 +27,16 @@ while getopts c:s:vtb opt; do
             start_training=true
             ;;
         b)
-            echo "...launching tensorboard..."
-            tensorboard --logdir=evaluation/tensorboard &
+            start_tensorboard=true
             ;;
     esac
 done
+
+
+if $start_tensorboard ; then
+    echo "...launching tensorboard..."
+    tensorboard --logdir=evaluation/tensorboard &
+fi
 
 
 if $start_training ; then
@@ -47,9 +53,6 @@ if $start_training ; then
             yes | cp -rf $configuration_file "main.json"
         fi
         cd ..
-
-        echo "...launching tensorboard..."
-        tensorboard --logdir=evaluation/tensorboard &
 
         echo "...setting up python environment..."
         PYTHONPATH=../gym-minigrid/:../gym-minigrid/gym_minigrid/:../baselines/:./configurations:./:$PYTHONPATH
