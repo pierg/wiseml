@@ -17,6 +17,7 @@ config = cg.Configuration.grab()
 args = ag.get_args()
 
 if args.n_timesteps != -1:
+    print("...setting up the n_timesteps to " + str(args.n_timesteps) + "...")
     cg.Configuration.set("n_timesteps", args.n_timesteps)
 
 if args.env_name:
