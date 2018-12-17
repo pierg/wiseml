@@ -81,7 +81,7 @@ def callback(_locals, _globals):
   """
   global n_steps, best_mean_reward
   # Print stats every 1000 calls
-  if (n_steps + 1) % 10 == 0:
+  if (n_steps + 1) % 1000 == 0:
       # Evaluate policy performance
       x, y = ts2xy(load_results(log_dir_config), 'timesteps')
       if len(x) > 0:
