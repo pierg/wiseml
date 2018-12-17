@@ -5,6 +5,8 @@ import numpy as np
 from stable_baselines.bench import Monitor
 import matplotlib.pyplot as plt
 from stable_baselines.results_plotter import load_results, ts2xy
+import imageio
+import numpy as np
 
 import os
 
@@ -72,6 +74,19 @@ def evaluate(env, model, num_steps=1000):
     print("Mean reward:", mean_reward, "Num episodes:", n_episodes)
 
     return mean_reward
+
+
+def creategif(model, model_path):
+    images = []
+    obs = model.env.reset()
+    img = model.env.render(mode='rgb_array')
+    for i in range(350):
+        images.append(img)
+        action, _ = model.predict(obs)
+        obs, _, _, _ = model.env.step(action)
+        img = model.env.render(mode='rgb_array')
+
+    imageio.mimsave(model_path + '.gif', [np.array(img[0]) for i, img in enumerate(images) if i % 2 == 0], fps=29)
 
 
 def movingAverage(values, window):

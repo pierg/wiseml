@@ -19,6 +19,8 @@ from stable_baselines import PPO2
 
 from agents.utils_functions import *
 
+import copy
+
 import random, string
 
 
@@ -81,7 +83,7 @@ def callback(_locals, _globals):
   """
   global n_steps, best_mean_reward
   # Print stats every 1000 calls
-  if (n_steps + 1) % 1000 == 0:
+  if (n_steps + 1) % 10 == 0:
       # Evaluate policy performance
       x, y = ts2xy(load_results(log_dir_config), 'timesteps')
       if len(x) > 0:
@@ -94,7 +96,10 @@ def callback(_locals, _globals):
               best_mean_reward = mean_reward
               # Example for saving best model
               print("Saving new best model")
-              _locals['self'].save(log_dir_config + "_timestep_" + str(n_steps))
+              model_name = log_dir_config + "_timestep_" + str(n_steps)
+              _locals['self'].save(model_name)
+              # model_copy = copy.deepcopy(model)
+              # creategif(model, model_name)
   n_steps += 1
   return True
 

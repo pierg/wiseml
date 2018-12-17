@@ -1,6 +1,6 @@
 {
     "config_custom_name": "lava_random",
-    "env_name": "MiniGrid-LavaCrossingS9N1-v0",
+    "env_name": "MiniGrid-SimpleDirtWatLightExp-9x9-v0",
     "envelope": false,
     "envelope_type": "mtsa",
     "debug_mode": false,
@@ -29,6 +29,6 @@
             "step": 0.0
         }
     },
-    "training_mode": true,
-    "config_name": "lava_random_PPO2_MlpLstmPolicy_ts100000000_ncpu4__xFrL"
+    "training_mode": false,
+    "config_name": "lava_random_PPO2_MlpLstmPolicy_ts100000000_ncpu4__ZYjO"
 }

@@ -85,6 +85,8 @@ def main():
 
         elif keyName == 'SPACE':
             action = env.actions.toggle
+        elif keyName == 'ALT':
+            action = env.actions.clean
         elif keyName == 'PAGE_UP':
             action = env.actions.pickup
         elif keyName == 'PAGE_DOWN':
