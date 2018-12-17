@@ -85,6 +85,10 @@ def movingAverage(values, window):
     return np.convolve(values, weights, 'valid')
 
 
+import os
+import shutil
+
+
 def plot_results(log_folder, title='Learning Curve'):
     """
     plot the results

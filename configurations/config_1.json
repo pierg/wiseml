@@ -1,14 +1,13 @@
 {
-    "config_name": "lavaenv",
+    "config_custom_name": "lava_random",
     "env_name": "MiniGrid-LavaCrossingS9N1-v0",
     "envelope": false,
     "envelope_type": "mtsa",
-    "evaluation_directory_name": "evaluations",
     "debug_mode": false,
-    "log_interval": 10,
-    "algorithm": "a2c",
+    "algo": "PPO2",
+    "policy": "MlpLstmPolicy",
     "n_cpu": 4,
-    "n_timesteps": 100000,
+    "n_timesteps": 100000000,
     "agent_view_size": 7,
     "controllers": {
         "safety": [
@@ -25,11 +24,11 @@
             "clean": 0.1
         },
         "standard": {
-            "death": -1.0,
+            "death": 0.0,
             "goal": 1.0,
-            "step": -0.005
+            "step": 0.0
         }
     },
     "training_mode": true,
-    "visdom": false
+    "config_name": "lava_random_PPO2_MlpLstmPolicy_ts100000000_ncpu4__xFrL"
 }

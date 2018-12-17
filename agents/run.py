@@ -20,7 +20,7 @@ n_timesteps = config.n_timesteps
 n_cpu = 4
 env = SubprocVecEnv([lambda: gym.make(env_id) for i in range(n_cpu)])
 
-model_id = "PPO2_" + env_id + "_" + n_timesteps + "ts"
+model_id = "PPO2_" + env_id + "_" + str(n_timesteps) + "ts"
 model = PPO2.load("./trained_models/" + model_id)
 print("Model Loaded!")
 
