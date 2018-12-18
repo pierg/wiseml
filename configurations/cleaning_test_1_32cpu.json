@@ -6,7 +6,7 @@
     "debug_mode": false,
     "algo": "PPO2",
     "policy": "MlpLstmPolicy",
-    "n_cpu": 4,
+    "n_cpu": 32,
     "n_timesteps": 100000000,
     "agent_view_size": 7,
     "controllers": {
