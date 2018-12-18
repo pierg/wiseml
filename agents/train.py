@@ -66,7 +66,7 @@ def make_env(env_id, rank, seed=0):
     def _init():
         env = gym.make(env_id)
         env.seed(seed + rank)
-        env = Monitor(env, log_dir_config + str(rank), allow_early_resets=True)
+        env = Monitor(env, log_dir_config + str(rank), allow_early_resets=False, info_keywords=('tot_steps', 'died', 'max_steps', 'goal'))
         return env
 
     set_global_seeds(seed)
