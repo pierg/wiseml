@@ -1,11 +1,11 @@
 {
-    "config_custom_name": "lava_random",
+    "config_custom_name": "cleaning",
     "env_name": "MiniGrid-SimpleDirtWatLightExp-9x9-v0",
     "envelope": false,
     "envelope_type": "mtsa",
     "debug_mode": false,
-    "algo": "PPO2",
-    "policy": "MlpLstmPolicy",
+    "algo": "A2C",
+    "policy": "CnnLstmPolicy",
     "n_cpu": 4,
     "n_timesteps": 100000000,
     "agent_view_size": 7,
@@ -29,5 +29,5 @@
             "step": 0.0
         }
     },
-    "training_mode": false,
+    "training_mode": true,
 }
