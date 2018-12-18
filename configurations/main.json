@@ -30,5 +30,6 @@
             "step": 0.0
         }
     },
-    "training_mode": false
+    "training_mode": false,
+    "config_name": "lava_random_PPO2_MlpLstmPolicy_ts100000000_ncpu4__rbwM"
 }
