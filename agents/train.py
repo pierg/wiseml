@@ -5,20 +5,14 @@ import time
 from stable_baselines.bench import Monitor
 
 from stable_baselines import logger
-from stable_baselines.bench import Monitor
-from stable_baselines.common import set_global_seeds
-from stable_baselines.common.cmd_util import make_atari_env
 
-from stable_baselines.common.vec_env import DummyVecEnv
 from configurations import config_grabber as cg
 from configurations import args_grabber as ag
 
-from stable_baselines.common.policies import MlpLstmPolicy
 from stable_baselines.common.vec_env import SubprocVecEnv
-from stable_baselines import PPO2
 
-from stable_baselines.common.policies import MlpPolicy
-from stable_baselines import A2C
+from stable_baselines.common.policies import *
+from stable_baselines import *
 
 from agents.utils_functions import *
 
