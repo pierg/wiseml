@@ -1,0 +1,34 @@
+{
+    "config_custom_name": "rwd9_clean",
+    "env_name": "MiniGrid-SimpleDirtWatLightExp-9x9-v0",
+    "envelope": false,
+    "envelope_type": "mtsa",
+    "debug_mode": false,
+    "algo": "A2C",
+    "policy": "MlpLstmPolicy",
+    "n_cpu": 4,
+    "n_timesteps": 100000000,
+    "agent_view_size": 7,
+    "controllers": {
+        "safety": [
+            "config_4/safety_main"
+        ]
+    },
+    "recording": true,
+    "rendering": true,
+    "rewards": {
+        "actions": {
+            "forward": 0.0
+        },
+        "cleaningenv": {
+            "clean": 0.1
+        },
+        "standard": {
+            "discounted": false,
+            "death": -0.5,
+            "goal": 10.0,
+            "step": -0.1
+        }
+    },
+    "training_mode": true
+}
