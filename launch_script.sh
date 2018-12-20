@@ -47,7 +47,7 @@ if $start_training ; then
             echo "using default configuration file: $configuration_file"
             cd ./configurations
         else
-            echo "...updating selected configuration file..."
+            echo "...wupdating selected configuration file..."
             cd ./configurations
             echo "using configuration file: $configuration_file"
             yes | cp -rf $configuration_file "main.json"
