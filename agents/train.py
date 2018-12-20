@@ -50,6 +50,7 @@ cg.Configuration.set("config_name", config_name)
 log_dir_config = log_dir + config_name + "/"
 os.makedirs(log_dir_config, exist_ok=True)
 shutil.copy("../configurations/main.json", log_dir_config)
+shutil.move(log_dir_config + "main.json", log_dir_config + "configuration.txt")
 
 
 
