@@ -9,7 +9,7 @@ from stable_baselines.common.policies import MlpPolicy, MlpLstmPolicy, MlpLnLstm
 from stable_baselines.common.vec_env import DummyVecEnv, SubprocVecEnv
 from stable_baselines import *
 
-from agents.utils_functions import *
+from agents.baselines.utils_functions import *
 from configurations import config_grabber as cg
 
 config = cg.Configuration.grab()

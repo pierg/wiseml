@@ -14,7 +14,7 @@ from stable_baselines.common.vec_env import SubprocVecEnv
 from stable_baselines.common.policies import *
 from stable_baselines import *
 
-from agents.utils_functions import *
+from agents.baselines.utils_functions import *
 
 import copy
 
