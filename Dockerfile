@@ -34,7 +34,6 @@ RUN git clone https://github.com/pierg/baselines.git
 RUN git clone https://github.com/pierg/gym-minigrid.git
 RUN git clone https://github.com/pierg/pytorch-a2c-ppo.git
 
-
 RUN python3 -m pip install --user --upgrade pip==9.0.3
 
 RUN \
@@ -58,14 +57,10 @@ RUN \
     pip3 install seaborn && \
     pip3 install glob2 && \
     pip3 install imageio && \
-    pip3 install gym[atari,classic_control]>=0.10.9
+    pip3 install gym[atari,classic_control]>=0.10.9 && \
+    pip3 install torch>=0.4.0 && \
+    pip3 install pyqt5>=5.10.1
 
-WORKDIR /home/wiseml/pytorch-a2c-ppo
-RUN pwd
-RUN pip3 install -e ./torch_rl
-
-WORKDIR /home/wiseml/gym-minigrid
-RUN pip3 install --e .
 
 WORKDIR /home/wiseml
 
