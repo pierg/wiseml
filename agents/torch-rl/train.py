@@ -95,7 +95,6 @@ args.algo = config.rl_parameters.algo
 args.env = config.env_name
 args.frames = config.rl_parameters.frames
 args.recurrence = config.rl_parameters.recurrence
-args.model = config.rl_parameters.model
 args.save_interval = config.rl_parameters.save_interval
 args.tb = config.rl_parameters.tb
 
@@ -108,6 +107,8 @@ log_dir_config = log_dir + config_name + "/"
 os.makedirs(log_dir_config, exist_ok=True)
 shutil.copy("../../configurations/main.json", log_dir_config)
 shutil.move(log_dir_config + "main.json", log_dir_config + "configuration.txt")
+
+args.model = config_name
 
 
 # Define run dir
