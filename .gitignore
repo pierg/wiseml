@@ -2,7 +2,8 @@
 pytorch_a2c/trained_models/
 .DS_Store
 evaluation/tensorboard
-agents/trained_models
+agents/baselines/trained_models
+agents/torch-rl/storage
 
 *.pyc
 *__pycache__
