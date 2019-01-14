@@ -61,7 +61,8 @@ RUN \
     pip3 install gym[atari,classic_control]>=0.10.9
 
 WORKDIR /home/wiseml/pytorch-a2c-ppo
-RUN pip3 install -e torch_rl
+RUN pwd
+RUN pip3 install -e ./torch_rl
 
 WORKDIR /home/wiseml/gym-minigrid
 RUN pip3 install --e .
