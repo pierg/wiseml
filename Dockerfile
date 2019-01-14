@@ -57,7 +57,8 @@ RUN \
     pip3 install seaborn && \
     pip3 install glob2 && \
     pip3 install imageio && \
-    pip3 install gym[atari,classic_control]>=0.10.9
+    pip3 install gym[atari,classic_control]>=0.10.9 && \
+    pip3 install tensorboardX
 
 
 # Installing pytorch
