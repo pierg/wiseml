@@ -37,6 +37,8 @@ log_dir = "./storage/"
 # Parse arguments
 
 parser = argparse.ArgumentParser()
+parser.add_argument("--n_timesteps", required=False,
+                    help="n_timesteps")
 parser.add_argument("--algo", required=False,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
 parser.add_argument("--env", required=False,
@@ -99,10 +101,7 @@ args.tb = config.rl_parameters.tb
 
 random_id = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(4))
 
-n_timesteps = config.n_timesteps
-n_cpu = config.n_cpu
-algo = eval(config.algo)
-policy = eval(config.policy)
+n_timesteps = args.frames
 config_name = config.config_custom_name + "_" + args.algo + "_ts" + str(args.frames) + "__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
 log_dir_config = log_dir + config_name + "/"

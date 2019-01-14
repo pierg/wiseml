@@ -33,5 +33,6 @@
             "goal": 10.0,
             "step": 0.0
         }
-    }
+    },
+    "config_name": "simple_cleaning_a2c_ts10000000__efyD"
 }
