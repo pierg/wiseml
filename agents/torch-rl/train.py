@@ -11,6 +11,7 @@ import sys
 import random, string
 import copy, os, shutil
 from configurations import config_grabber as cg
+from configurations import args_grabber as ag
 
 try:
     import gym_minigrid
@@ -20,6 +21,15 @@ except ImportError:
 import utils
 from model import ACModel
 
+
+args = ag.get_args()
+
+if args.n_timesteps != -1:
+    print("...setting up the n_timesteps to " + str(args.n_timesteps) + "...")
+    cg.Configuration.set("n_timesteps", args.n_timesteps)
+
+if args.env_name:
+    cg.Configuration.set("env_name", args.env_name)
 
 config = cg.Configuration.grab()
 log_dir = "./storage/"
