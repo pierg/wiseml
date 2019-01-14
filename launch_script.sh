@@ -55,11 +55,11 @@ if $start_training ; then
         cd ..
 
         echo "...setting up python environment..."
-        PYTHONPATH=../gym-minigrid/:../gym-minigrid/gym_minigrid/:../baselines/:./configurations:./:$PYTHONPATH
+        PYTHONPATH=../gym-minigrid/:../gym-minigrid/gym_minigrid/:../baselines/:../pytorch-a2c-ppo/:../pytorch-a2c-ppo/torch_rl/:./configurations:./:$PYTHONPATH
         export PYTHONPATH
 
         echo "...launching the training..."
-        cd agents
+        cd agents/torch-rl/
         if $verbose ; then
             python3 train.py --n_timesteps=$n_timesteps --verbose
         else

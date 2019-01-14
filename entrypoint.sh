@@ -21,6 +21,13 @@ git reset --hard HEAD
 git clean -f
 git pull
 
+echo "...updating repository pytorch-a2c-ppo..."
+cd ../pytorch-a2c-ppo/
+pwd
+git reset --hard HEAD
+git clean -f
+git pull
+
 echo "...launching wiseml launch_script..."
 cd ../wiseml/
 pwd

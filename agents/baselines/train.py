@@ -49,7 +49,7 @@ config_name = config.config_custom_name + "_" + config.algo + "_" + config.polic
 cg.Configuration.set("config_name", config_name)
 log_dir_config = log_dir + config_name + "/"
 os.makedirs(log_dir_config, exist_ok=True)
-shutil.copy("../configurations/main.json", log_dir_config)
+shutil.copy("../../configurations/main.json", log_dir_config)
 shutil.move(log_dir_config + "main.json", log_dir_config + "configuration.txt")
 
 
@@ -67,6 +67,7 @@ def make_env(env_id, rank, seed=0):
     def _init():
         env = gym.make(env_id)
         env.seed(seed + rank)
+        env.nodictionaryobs()
         env = Monitor(env, log_dir_config + str(rank), allow_early_resets=False, info_keywords=('tot_steps', 'died', 'max_steps', 'goal'))
         return env
 

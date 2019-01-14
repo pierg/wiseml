@@ -32,7 +32,7 @@ WORKDIR /home
 RUN git clone https://github.com/pierg/wiseml.git
 RUN git clone https://github.com/pierg/baselines.git
 RUN git clone https://github.com/pierg/gym-minigrid.git
-
+RUN git clone https://github.com/pierg/pytorch-a2c-ppo.git
 
 
 RUN python3 -m pip install --user --upgrade pip==9.0.3
@@ -60,9 +60,15 @@ RUN \
     pip3 install imageio && \
     pip3 install gym[atari,classic_control]>=0.10.9
 
-ENV PYTHONPATH "${PYTHONPATH}:/home/wiseml:/home/baselines:/home/gym-minigrid/:/home/gym-minigrid/gym_minigrid:/home/gym-minigrid/gym_minigrid/envs"
+WORKDIR /home/wiseml/pytorch-a2c-ppo
+RUN pip3 install -e torch_rl
+
+WORKDIR /home/wiseml/gym-minigrid
+RUN pip3 install --e .
 
 WORKDIR /home/wiseml
+
+ENV PYTHONPATH "${PYTHONPATH}:/home/wiseml:/home/baselines:/home/pytorch-a2c-ppo:/home/pytorch-a2c-ppo/torch_rl:/home/gym-minigrid/:/home/gym-minigrid/gym_minigrid:/home/gym-minigrid/gym_minigrid/envs"
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD [""]

@@ -1,25 +1,20 @@
 {
-    "config_custom_name": "simple_cleaning",
+    "config_custom_name": "lava_random",
     "env_name": "MiniGrid-SimpleDirtWatLightExp-9x9-v0",
-    "agent_view_size": 7,
-    "rendering": false,
     "envelope": false,
     "envelope_type": "mtsa",
     "debug_mode": false,
-    "rl_framework": "torch-rl",
-    "rl_parameters": {
-        "algo": "a2c",
-        "frames": 10000000,
-        "recurrence": 1,
-        "model": "simple_cleaning",
-        "save_interval": 10,
-        "tb": true
-    },
+    "algo": "PPO2",
+    "policy": "MlpLstmPolicy",
+    "n_cpu": 4,
+    "n_timesteps": 100000000,
+    "agent_view_size": 7,
     "controllers": {
         "safety": [
             "config_4/safety_main"
         ]
     },
+    "rendering": true,
     "rewards": {
         "actions": {
             "forward": 0.0
@@ -33,5 +28,7 @@
             "goal": 10.0,
             "step": 0.0
         }
-    }
+    },
+    "training_mode": false,
+    "config_name": "lava_random_PPO2_MlpLstmPolicy_ts100000000_ncpu4__plS6"
 }
