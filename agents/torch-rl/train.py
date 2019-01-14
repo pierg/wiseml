@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 
 import argparse
+
 import gym
 import time
 import datetime
 import torch
 import torch_rl
 import sys
+import random, string
+import copy, os, shutil
 from configurations import config_grabber as cg
 
 try:
@@ -19,6 +22,7 @@ from model import ACModel
 
 
 config = cg.Configuration.grab()
+log_dir = "./storage/"
 
 # Parse arguments
 
@@ -82,6 +86,20 @@ args.recurrence = config.rl_parameters.recurrence
 args.model = config.rl_parameters.model
 args.save_interval = config.rl_parameters.save_interval
 args.tb = config.rl_parameters.tb
+
+random_id = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(4))
+
+n_timesteps = config.n_timesteps
+n_cpu = config.n_cpu
+algo = eval(config.algo)
+policy = eval(config.policy)
+config_name = config.config_custom_name + "_" + args.algo + "_ts" + str(args.frames) + "__" + str(random_id)
+cg.Configuration.set("config_name", config_name)
+log_dir_config = log_dir + config_name + "/"
+os.makedirs(log_dir_config, exist_ok=True)
+shutil.copy("../../configurations/main.json", log_dir_config)
+shutil.move(log_dir_config + "main.json", log_dir_config + "configuration.txt")
+
 
 # Define run dir
 

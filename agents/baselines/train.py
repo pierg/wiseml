@@ -33,7 +33,7 @@ if args.env_name:
 verbose = args.verbose * 1
 
 # Create log dir
-log_dir = "../evaluation/"
+log_dir = "./evaluation/"
 os.makedirs(log_dir, exist_ok=True)
 
 config = cg.Configuration.grab()

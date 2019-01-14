@@ -1,21 +1,25 @@
 {
-    "config_custom_name": "rwd6_clean",
+    "config_custom_name": "simple_cleaning_rwd_1",
     "env_name": "MiniGrid-SimpleDirtWatLightExp-9x9-v0",
+    "agent_view_size": 7,
+    "rendering": false,
     "envelope": false,
     "envelope_type": "mtsa",
     "debug_mode": false,
-    "algo": "A2C",
-    "policy": "MlpLstmPolicy",
-    "n_cpu": 4,
-    "n_timesteps": 100000000,
-    "agent_view_size": 7,
+    "rl_framework": "torch-rl",
+    "rl_parameters": {
+        "algo": "a2c",
+        "frames": 10000000,
+        "recurrence": 1,
+        "model": "simple_cleaning",
+        "save_interval": 10,
+        "tb": true
+    },
     "controllers": {
         "safety": [
             "config_4/safety_main"
         ]
     },
-    "recording": true,
-    "rendering": true,
     "rewards": {
         "actions": {
             "forward": 0.0
@@ -25,10 +29,9 @@
         },
         "standard": {
             "discounted": false,
-            "death": -0.5,
+            "death": 0.0,
             "goal": 1.0,
-            "step": -0.001
+            "step": 0.0
         }
-    },
-    "training_mode": true
+    }
 }

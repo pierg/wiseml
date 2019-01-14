@@ -57,9 +57,12 @@ RUN \
     pip3 install seaborn && \
     pip3 install glob2 && \
     pip3 install imageio && \
-    pip3 install gym[atari,classic_control]>=0.10.9 && \
-    pip3 install torch>=0.4.0 && \
-    pip3 install pyqt5>=5.10.1
+    pip3 install gym[atari,classic_control]>=0.10.9
+
+
+# Installing pytorch
+RUN pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.0-cp36-cp36m-linux_x86_64.whl
+RUN pip3 install torchvision
 
 
 WORKDIR /home/wiseml
