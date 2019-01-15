@@ -1,0 +1,37 @@
+{
+    "config_custom_name": "simple_cleaning_rwd_5",
+    "env_name": "MiniGrid-SimpleDirtWatLightExp-9x9-v0",
+    "agent_view_size": 7,
+    "rendering": false,
+    "envelope": false,
+    "envelope_type": "mtsa",
+    "debug_mode": false,
+    "rl_framework": "torch-rl",
+    "rl_parameters": {
+        "algo": "a2c",
+        "frames": 10000000,
+        "recurrence": 4,
+        "model": "simple_cleaning",
+        "save_interval": 10,
+        "tb": true
+    },
+    "controllers": {
+        "safety": [
+            "config_4/safety_main"
+        ]
+    },
+    "rewards": {
+        "actions": {
+            "forward": 0.0
+        },
+        "cleaningenv": {
+            "clean": 1
+        },
+        "standard": {
+            "discounted": true,
+            "death": -10,
+            "goal": 50.0,
+            "step": 0.0
+        }
+    }
+}
