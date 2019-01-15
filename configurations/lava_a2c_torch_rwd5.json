@@ -1,6 +1,6 @@
 {
     "config_custom_name": "lava_rwd_5",
-    "env_name": "MiniGrid-LavaCrossingS9N1-v",
+    "env_name": "MiniGrid-LavaCrossingS9N1-v0",
     "agent_view_size": 7,
     "rendering": false,
     "envelope": false,

@@ -8,7 +8,7 @@ def get_args():
                         help='number of timesteps to train the agent')
     parser.add_argument('--verbose', action='store_true', default=False,
                         help='set no monitor')
-    parser.add_argument('--config_file_name', default=False,
+    parser.add_argument('--config_file_name', default="main",
                         help='configuration file name')
 
 
