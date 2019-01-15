@@ -3,6 +3,7 @@
 # Sets the main.json as default, if the -c is specifed
 # it will use that as config file.
 configuration_file="main.json"
+configuration_name="main"
 
 n_timesteps=-1
 start_training=false
@@ -12,7 +13,8 @@ verbose=false
 while getopts c:s:vtb opt; do
     case ${opt} in
         c)
-            configuration_file=${OPTARG}
+            configuration_name=${OPTARG}
+            configuration_file="$configuration_name.json"
             start_training=true
             ;;
         s)
@@ -61,9 +63,9 @@ if $start_training ; then
         echo "...launching the training..."
         cd agents/torch-rl/
         if $verbose ; then
-            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_file --verbose
+            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_name --verbose
         else
-            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_file
+            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_name
         fi
 else
         echo "...accessing the container without launching anything..."
