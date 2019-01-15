@@ -224,8 +224,8 @@ while num_frames < args.frames:
         data += rreturn_per_episode.values()
         header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
         data += num_frames_per_episode.values()
-        header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm", "late_mean_n_steps_to_goal", "steps_to_goal"]
-        data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"], latest_steps_to_goal, logs["steps_to_goal"]]
+        header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm", "late_mean_n_steps_to_goal", "steps_to_goal", "n_deaths"]
+        data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"], latest_steps_to_goal, logs["steps_to_goal"], logs["n_deaths"]]
 
 
         logger.info(
