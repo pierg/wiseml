@@ -101,7 +101,7 @@ args.tb = config.rl_parameters.tb
 random_id = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(4))
 
 n_timesteps = args.frames
-config_name = config.config_custom_name + "_" + args.algo + "_ts" + str(args.frames) + "__" + str(random_id)
+config_name = args.config_file_name + "__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
 log_dir_config = log_dir + config_name + "/"
 os.makedirs(log_dir_config, exist_ok=True)
