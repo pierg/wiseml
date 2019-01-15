@@ -192,12 +192,19 @@ num_frames = status["num_frames"]
 total_start_time = time.time()
 update = status["update"]
 
+
+latest_steps_to_goal = -1
+
 while num_frames < args.frames:
     # Update model parameters
 
     update_start_time = time.time()
     logs = algo.update_parameters()
     update_end_time = time.time()
+
+    if logs["steps_to_goal"] != -1:
+        latest_steps_to_goal = logs["steps_to_goal"]
+
 
     num_frames += logs["num_frames"]
     update += 1
@@ -217,8 +224,9 @@ while num_frames < args.frames:
         data += rreturn_per_episode.values()
         header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
         data += num_frames_per_episode.values()
-        header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
-        data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
+        header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm", "late_mean_n_steps_to_goal", "steps_to_goal"]
+        data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"], latest_steps_to_goal, logs["steps_to_goal"]]
+
 
         logger.info(
             "U {} | F {:06} | FPS {:04.0f} | D {} | rR:x̄σmM {:.2f} {:.2f} {:.2f} {:.2f} | F:x̄σmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f}"
