@@ -11,12 +11,16 @@ except ImportError:
 
 import utils
 
+from configurations import config_grabber as cg
+config = cg.Configuration.grab()
+log_dir = "./storage/"
+
 # Parse arguments
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--env", required=True,
+parser.add_argument("--env", required=False,
                     help="name of the environment to be run (REQUIRED)")
-parser.add_argument("--model", required=True,
+parser.add_argument("--model", required=False,
                     help="name of the trained model (REQUIRED)")
 parser.add_argument("--seed", type=int, default=0,
                     help="random seed (default: 0)")
@@ -27,6 +31,9 @@ parser.add_argument("--pause", type=float, default=0.1,
 args = parser.parse_args()
 
 # Set seed for all randomness sources
+
+args.env = config.env_name
+args.model = config.rl_parameters.model
 
 utils.seed(args.seed)
 
@@ -47,7 +54,7 @@ done = True
 while True:
     if done:
         obs = env.reset()
-        print("Instr:", obs["mission"])
+        # print("Instr:", obs["mission"])
 
     time.sleep(args.pause)
     renderer = env.render("human")
