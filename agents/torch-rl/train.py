@@ -25,11 +25,11 @@ from model import ACModel
 script_args = ag.get_args()
 
 if script_args.n_timesteps != -1:
-    print("...setting up the n_timesteps to " + str(args.n_timesteps) + "...")
-    cg.Configuration.set("n_timesteps", args.n_timesteps)
+    print("...setting up the n_timesteps to " + str(script_args.n_timesteps) + "...")
+    cg.Configuration.set("n_timesteps", script_args.n_timesteps)
 
 if script_args.env_name:
-    cg.Configuration.set("env_name", args.env_name)
+    cg.Configuration.set("env_name", script_args.env_name)
 
 config = cg.Configuration.grab()
 log_dir = "./storage/"
@@ -110,10 +110,13 @@ if args.config_file_name is not None:
 else:
     config_name = "main__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
+print("script_args.folder_name: " + script_args.folder_name)
 if script_args.folder_name:
     log_dir_config = log_dir + config_name + "/"
 else:
     log_dir_config = log_dir + config.rl_parameters.model + "/"
+
+print("using " + log_dir_config + " folder to store the results")
 
 os.makedirs(log_dir_config, exist_ok=True)
 shutil.copy("../../configurations/main.json", log_dir_config)
