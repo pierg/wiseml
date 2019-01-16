@@ -22,13 +22,13 @@ import utils
 from model import ACModel
 
 
-args = ag.get_args()
+script_args = ag.get_args()
 
-if args.n_timesteps != -1:
+if script_args.n_timesteps != -1:
     print("...setting up the n_timesteps to " + str(args.n_timesteps) + "...")
     cg.Configuration.set("n_timesteps", args.n_timesteps)
 
-if args.env_name:
+if script_args.env_name:
     cg.Configuration.set("env_name", args.env_name)
 
 config = cg.Configuration.grab()
@@ -39,7 +39,7 @@ log_dir = "./storage/"
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_timesteps", required=False,
                     help="n_timesteps")
-parser.add_argument("--folder_name", required=False,
+parser.add_argument("--folder_name", action="store_true", default=False,
                     help="folder_name")
 parser.add_argument("--config_file_name", required=False,
                     help="config_file_name")
@@ -110,7 +110,7 @@ if args.config_file_name is not None:
 else:
     config_name = "main__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
-if args.folder_name:
+if script_args.folder_name:
     log_dir_config = log_dir + config_name + "/"
 else:
     log_dir_config = log_dir + config.rl_parameters.model + "/"
