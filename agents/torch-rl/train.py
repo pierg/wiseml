@@ -110,10 +110,12 @@ if args.config_file_name is not None:
 else:
     config_name = "main__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
-print("script_args.folder_name: " + str(script_args.folder_name))
+
 if script_args.folder_name:
+    args.model = config_name
     log_dir_config = log_dir + config_name + "/"
 else:
+    args.model = config.rl_parameters.model
     log_dir_config = log_dir + config.rl_parameters.model + "/"
 
 print("using " + log_dir_config + " folder to store the results")
@@ -121,8 +123,6 @@ print("using " + log_dir_config + " folder to store the results")
 os.makedirs(log_dir_config, exist_ok=True)
 shutil.copy("../../configurations/main.json", log_dir_config)
 shutil.move(log_dir_config + "main.json", log_dir_config + "configuration.txt")
-
-args.model = config.rl_parameters.model
 
 
 # Define run dir
