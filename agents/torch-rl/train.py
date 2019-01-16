@@ -110,7 +110,7 @@ if args.config_file_name is not None:
 else:
     config_name = "main__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
-print("script_args.folder_name: " + script_args.folder_name)
+print("script_args.folder_name: " + str(script_args.folder_name))
 if script_args.folder_name:
     log_dir_config = log_dir + config_name + "/"
 else:
