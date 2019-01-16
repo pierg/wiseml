@@ -39,6 +39,8 @@ log_dir = "./storage/"
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_timesteps", required=False,
                     help="n_timesteps")
+parser.add_argument("--folder_name", required=False,
+                    help="folder_name")
 parser.add_argument("--config_file_name", required=False,
                     help="config_file_name")
 parser.add_argument("--algo", required=False,
@@ -99,7 +101,6 @@ args.frames = config.rl_parameters.frames
 args.recurrence = config.rl_parameters.recurrence
 args.save_interval = config.rl_parameters.save_interval
 args.tb = config.rl_parameters.tb
-args.model = config.rl_parameters.model
 
 random_id = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(4))
 
@@ -109,11 +110,16 @@ if args.config_file_name is not None:
 else:
     config_name = "main__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
-log_dir_config = log_dir + args.model + "/"
+if args.folder_name:
+    log_dir_config = log_dir + config_name + "/"
+else:
+    log_dir_config = log_dir + config.rl_parameters.model + "/"
+
 os.makedirs(log_dir_config, exist_ok=True)
 shutil.copy("../../configurations/main.json", log_dir_config)
 shutil.move(log_dir_config + "main.json", log_dir_config + "configuration.txt")
 
+args.model = config.rl_parameters.model
 
 
 # Define run dir

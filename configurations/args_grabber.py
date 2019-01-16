@@ -10,6 +10,8 @@ def get_args():
                         help='set no monitor')
     parser.add_argument('--config_file_name', default="main",
                         help='configuration file name')
+    parser.add_argument('--folder_name', default=False,
+                        help='indicates if the results folder name has to have a new name')
 
 
     args = parser.parse_args()

@@ -5,6 +5,7 @@ import gym
 import time
 import torch
 from torch_rl.utils.penv import ParallelEnv
+from configurations import config_grabber as cg
 
 try:
     import gym_minigrid
@@ -13,12 +14,14 @@ except ImportError:
 
 import utils
 
+config = cg.Configuration.grab()
+
 # Parse arguments
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--env", required=True,
+parser.add_argument("--env", required=False,
                     help="name of the environment to be run (REQUIRED)")
-parser.add_argument("--model", required=True,
+parser.add_argument("--model", required=False,
                     help="name of the trained model (REQUIRED)")
 parser.add_argument("--episodes", type=int, default=1000,
                     help="number of episodes of evaluation (default: 1000)")
@@ -31,6 +34,8 @@ parser.add_argument("--argmax", action="store_true", default=False,
 args = parser.parse_args()
 
 # Set seed for all randomness sources
+args.env = config.env_name
+args.model = config.rl_parameters.model
 
 utils.seed(args.seed)
 

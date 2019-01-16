@@ -63,9 +63,9 @@ if $start_training ; then
         echo "...launching the training..."
         cd agents/torch-rl/
         if $verbose ; then
-            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_name --verbose
+            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_name --folder_name --verbose
         else
-            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_name
+            python3 train.py --n_timesteps=$n_timesteps --config_file_name=$configuration_name --folder_name
         fi
 else
         echo "...accessing the container without launching anything..."
