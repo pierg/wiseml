@@ -9,7 +9,7 @@
     "rl_framework": "torch-rl",
     "rl_parameters": {
         "algo": "a2c",
-        "frames": 10000000,
+        "frames": 100000000,
         "recurrence": 2,
         "model": "lava",
         "save_interval": 10,
