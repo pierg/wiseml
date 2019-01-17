@@ -29,6 +29,7 @@
         },
         "standard": {
             "discounted": true,
+            "original": false,
             "death": -0.5,
             "goal": 50.0,
             "step": 0.0
