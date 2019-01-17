@@ -101,6 +101,8 @@ args.frames = config.rl_parameters.frames
 args.recurrence = config.rl_parameters.recurrence
 args.save_interval = config.rl_parameters.save_interval
 args.tb = config.rl_parameters.tb
+if hasattr(config.rl_parameters, "learning_rate"):
+    args.lr = config.rl_parameters.learning_rate
 
 random_id = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(4))
 
