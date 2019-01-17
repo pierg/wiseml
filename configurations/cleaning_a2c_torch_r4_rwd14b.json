@@ -25,7 +25,7 @@
             "forward": 0.0
         },
         "cleaningenv": {
-            "clean": 1
+            "clean": 10
         },
         "standard": {
             "discounted": true,
