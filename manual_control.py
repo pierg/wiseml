@@ -51,11 +51,12 @@ def main():
     env = gym.make(options.env_name)
 
     if config.envelope:
-        env = SafetyEnvelope(env)
+        if config.envelope_type == "mtsa":
+            safe_env = SafetyEnvelope(env)
 
 
     def resetEnv():
-        env.reset()
+        safe_env.reset()
         if hasattr(env, 'mission'):
             print('Mission: %s' % env.mission)
 
@@ -99,7 +100,7 @@ def main():
             print("unknown key %s" % keyName)
             return
 
-        obs, reward, done, info = env.step(action)
+        obs, reward, done, info = safe_env.step(action)
         observed = True
 
         print('step=%s, reward=%.2f' % (env.step_count, reward))
@@ -111,10 +112,10 @@ def main():
     renderer.window.setKeyDownCb(keyDownCb)
 
     while True:
-        env.render('human')
+        safe_env.render('human')
         time.sleep(0.01)
         if observed and config.envelope is True and config.envelope_type == "mtsa":
-            env.step(-1)
+            safe_env.step(-1)
             observed = False
         # If the window was closed
         if renderer.window == None:

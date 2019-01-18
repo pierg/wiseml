@@ -25,7 +25,7 @@
             "forward": 0.0
         },
         "cleaningenv": {
-            "clean": 1
+            "clean": 10
         },
         "standard": {
             "discounted": true,
@@ -33,7 +33,5 @@
             "goal": 50.0,
             "step": 0.0
         }
-    },
-    "config_name": "main__4r9S",
-    "training_mode": false
+    }
 }

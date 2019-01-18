@@ -5,11 +5,13 @@ class Perception():
 
     def __init__(self, observations):
         self.obs_grid, extra_obs = observations
-        self.obs_door_open = extra_obs[0]
-        self.obs_light_on = extra_obs[1]
-        self.current_room = extra_obs[2]
-        self.current_room_light = extra_obs[3]
-        self.next_room_light = extra_obs[4]
+
+        # Initial conditions
+        self.door_open = 0
+        self.obs_light_on = 0
+        self.current_room = 0
+        self.current_room_light = 1
+        self.next_room_light = 1
 
     def search_and_return(self, element_name):
         grid = self.obs_grid
@@ -61,13 +63,25 @@ class Perception():
 
     def update(self, observations):
         self.obs_grid, extra_obs = observations
-        self.obs_door_open = extra_obs[0]
-        self.obs_light_on = extra_obs[1]
-        self.current_room = extra_obs[2]
-        self.current_room_light = extra_obs[3]
-        self.next_room_light = extra_obs[4]
-        self.element_at_left()
-        self.element_at_right()
+
+        if self.is_condition_satisfied("light-switch-in-front-on"):
+            self.next_room_light = 1
+        if self.is_condition_satisfied("light-switch-in-front-off"):
+            self.next_room_light = 0
+        if self.is_condition_satisfied("door-opened-in-front"):
+            self.door_open = 1
+        if self.is_condition_satisfied("door-closed-in-front"):
+            self.door_open = 0
+
+
+    def update_action(self, applied_action):
+        # The agent has actually crossed the room
+        if self.is_condition_satisfied("entering-a-room", applied_action):
+            self.current_room = (self.current_room + 1) % 2
+            # Exchange current and next room values
+            a = self.current_room_light
+            self.current_room_light = self.next_room_light
+            self.next_room_light = a
 
     def check_context(self, context):
         if context == "water-front":
@@ -101,10 +115,27 @@ class Perception():
 
         elif condition == "light-switch-turned-on":
             # It looks for a light switch around its field of view and returns true if it is on
-            if self.obs_light_on == 1:
+            elem = self.search_and_return("lightsw")
+            if elem is not None and elem.type == "lightsw" \
+                    and hasattr(elem, 'is_on') and elem.is_on:
                 return True
             return False
 
+        elif condition == "light-switch-turned-off":
+            # It looks for a light switch around its field of view and returns true if it is off
+            elem = self.search_and_return("lightsw")
+            if elem is not None and elem.type == "lightsw" \
+                    and hasattr(elem, 'is_on') and not elem.is_on:
+                return True
+            return False
+
+        elif condition == "light-switch-in-front-on":
+            # Returns true if the agent is in front of a light-switch and it is off
+            elem = self.element_in_front()
+            if elem is not None and elem.type == "lightsw" \
+                    and hasattr(elem, 'is_on') and elem.is_on:
+                return True
+            return False
 
         elif condition == "light-switch-in-front-off":
             # Returns true if the agent is in front of a light-switch and it is off
@@ -180,5 +211,15 @@ class Perception():
         elif condition == "room-1":
             # Returns true if the agent is in the room after it crossed the door
             if self.current_room == 1:
+                return True
+            return False
+
+        elif condition == "door-opened":
+            if self.door_open == 1:
+                return True
+            return False
+
+        elif condition == "door-closed":
+            if self.door_open == 0:
                 return True
             return False

@@ -27,11 +27,6 @@ class Controller(Machine):
         self.tigger_action = None
         self.available_actions = None
 
-        # The agent uses toggle for doors and light switch but the mtsa models does not
-        self.is_toggle_a_switch = False
-
-        # The agent uses toggle for dirt but the mtsa models does not
-        self.is_toggle_a_clean = False
 
         states_path = os.path.abspath(os.path.dirname(__file__) + "/state_machines/" + self.controller_name + "_states.txt")
         transitions_path = os.path.abspath(os.path.dirname(__file__) + "/state_machines/" + self.controller_name + "_transitions.txt")
@@ -83,36 +78,21 @@ class Controller(Machine):
 
     def act(self, action):
         if self.is_active():
-            self.tigger_action = action
-            if action == 'toggle':
-                safe_actions = set(["clean", "toggle", "switch"])
-                safe_actions.intersection_update(self.available_actions)
-                self.tigger_action = random.choice(list(safe_actions))
-            self.trigger(self.tigger_action)
+            self.trigger(action)
 
 
 
     def get_available_actions_for_agent(self):
-        av_actions = self.available_actions[:]
-        toggle_is_in = False
-        for action in av_actions[:]:
-            if action in ["clean", "toggle", "switch"]:
-                id = av_actions.index(action)
-                if toggle_is_in:
-                    av_actions.remove(action)
-                else:
-                    av_actions[id] = 'toggle'
-                    toggle_is_in = True
-        return av_actions
+        return self.available_actions
+
 
 
 
     def fill_observations(self):
         Controller.obs["light-on-next-room"] = self.perception.is_condition_satisfied("light-on-next-room")
         Controller.obs["light-off-next-room"] = not self.perception.is_condition_satisfied("light-on-next-room")
-        # TODO: what does it mean door-opened/closed for the controller? In front or anywhere in its field or opened in the past?
-        Controller.obs["door-opened"] = self.perception.is_condition_satisfied("door-opened-in-front")
-        Controller.obs["door-closed"] = self.perception.is_condition_satisfied("door-closed-in-front")
+        Controller.obs["door-opened"] = self.perception.is_condition_satisfied("door-opened")
+        Controller.obs["door-closed"] = self.perception.is_condition_satisfied("door-closed")
         Controller.obs["room-0"] = self.perception.is_condition_satisfied("room-0")
         Controller.obs["room-1"] = self.perception.is_condition_satisfied("room-1")
         Controller.obs["dirt-left"] = self.perception.string_element_at_left() == "dirt"

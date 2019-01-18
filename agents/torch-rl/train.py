@@ -12,8 +12,10 @@ import random, string
 import copy, os, shutil
 from configurations import config_grabber as cg
 from configurations import args_grabber as ag
+import logging
 
 try:
+    from envelopes.mtsa.envelopes import SafetyEnvelope as MTSASafetyEnvelope
     import gym_minigrid
 except ImportError:
     pass
@@ -21,6 +23,7 @@ except ImportError:
 import utils
 from model import ACModel
 
+logging.getLogger("transitions.core").setLevel(logging.WARNING)
 
 script_args = ag.get_args()
 
@@ -112,6 +115,7 @@ if args.config_file_name is not None:
 else:
     config_name = "main__" + str(random_id)
 cg.Configuration.set("config_name", config_name)
+cg.Configuration.set("debug_mode", False)
 
 if script_args.folder_name:
     args.model = config_name
@@ -156,6 +160,9 @@ utils.seed(args.seed)
 envs = []
 for i in range(args.procs):
     env = gym.make(args.env)
+    if config.envelope:
+        if config.envelope_type == "mtsa":
+            env = MTSASafetyEnvelope(env)
     env.seed(args.seed + 10000*i)
     envs.append(env)
 
@@ -235,12 +242,12 @@ while num_frames < args.frames:
         data += rreturn_per_episode.values()
         header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
         data += num_frames_per_episode.values()
-        header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm", "late_mean_n_steps_to_goal", "steps_to_goal", "n_deaths"]
-        data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"], latest_steps_to_goal, logs["steps_to_goal"], logs["n_deaths"]]
+        header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm", "late_mean_n_steps_to_goal", "steps_to_goal", "n_deaths", "n_violations"]
+        data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"], latest_steps_to_goal, logs["steps_to_goal"], logs["n_deaths"], logs["n_violations"]]
 
 
         logger.info(
-            "U {} | F {:06} | FPS {:04.0f} | D {} | rR:x̄σmM {:.2f} {:.2f} {:.2f} {:.2f} | F:x̄σmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f} | lsG {} | sG {} | nD {}"
+            "U {} | F {:06} | FPS {:04.0f} | D {} | rR:x̄σmM {:.2f} {:.2f} {:.2f} {:.2f} | F:x̄σmM {:.1f} {:.1f} {} {} | H {:.3f} | V {:.3f} | pL {:.3f} | vL {:.3f} | ∇ {:.3f} | lsG {} | sG {} | nD {} | nV {}"
             .format(*data))
 
         header += ["return_" + key for key in return_per_episode.keys()]
