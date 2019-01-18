@@ -52,12 +52,8 @@ class SafetyEnvelope(gym.core.Wrapper):
                 self.controllers.append(new_controller)
 
         # Set controller rewards
-        # self.respected_reward = self.config.rewards.controller.respected
-        # self.violated_reward = self.config.rewards.controller.violated
-
-        # Set controller rewards
-        self.respected_reward = 1
-        self.violated_reward = -1
+        self.respected_reward = 0
+        self.violated_reward = 0
 
         self.proposed_action = None
         self.safe_actions = None

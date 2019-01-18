@@ -53,6 +53,8 @@ def main():
     if config.envelope:
         if config.envelope_type == "mtsa":
             safe_env = SafetyEnvelope(env)
+    else:
+        safe_env = env
 
 
     def resetEnv():
