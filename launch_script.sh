@@ -57,7 +57,7 @@ if $start_training ; then
         cd ..
 
         echo "...setting up python environment..."
-        PYTHONPATH=../gym-minigrid/:../gym-minigrid/gym_minigrid/:../baselines/:../pytorch-a2c-ppo/:../pytorch-a2c-ppo/torch_rl/:./configurations:./:$PYTHONPATH
+        PYTHONPATH=../gym-minigrid/:../gym-minigrid/gym_minigrid/:../baselines/:../pytorch-a2c-ppo/:../pytorch-a2c-ppo/torch_rl/:./configurations:./envelopes:./:$PYTHONPATH
         export PYTHONPATH
 
         echo "...launching the training..."
