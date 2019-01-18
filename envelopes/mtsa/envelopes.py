@@ -6,7 +6,7 @@ try:
     from configurations import config_grabber as cg
 
     from extendedminigrid import *
-    from mtsa.controller import *
+    from envelopes.mtsa.controller import *
     from envelopes.perception import Perception
 
     import gym
