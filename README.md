@@ -10,4 +10,4 @@ Monitors, defined by properties and context, are orchestrated by a meta-monitor 
 Evaluation of the approach shows that it blocks the agent from performing unsafe actions in all tested environments, and helps the agent achieve its goal faster.
 
 
-Check (paper on IEEE Xplore)[https://ieeexplore.ieee.org/document/8823721].
+Check [paper on IEEE Xplore](https://ieeexplore.ieee.org/document/8823721).
